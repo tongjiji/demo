@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import Layout from '../components/Layout/Layout'
 import Sidebar from '../components/Layout/Sidebar'
-import Header from '../components/Layout/Header'
 import MainContent from '../components/Layout/MainContent'
 import TaskForm from '../components/Task/TaskForm'
 import TaskList from '../components/Task/TaskList'
@@ -39,7 +38,6 @@ const Home: React.FC = () => {
     })
 
   const paginatedTasks = filteredTasks.slice((currentPage - 1) * pageSize, currentPage * pageSize)
-  const totalPages = Math.ceil(filteredTasks.length / pageSize)
 
   return (
     <Layout>
