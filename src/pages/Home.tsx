@@ -1,7 +1,5 @@
 import React, { useState } from 'react'
 import Layout from '../components/Layout/Layout'
-import Sidebar from '../components/Layout/Sidebar'
-import MainContent from '../components/Layout/MainContent'
 import TaskForm from '../components/Task/TaskForm'
 import TaskList from '../components/Task/TaskList'
 import StatsSection from '../components/Stats/StatsSection'
@@ -42,24 +40,32 @@ const Home: React.FC = () => {
   return (
     <Layout>
       <div className="flex space-x-6">
-        <Sidebar>
-          <StatsSection
-            totalTasks={stats.totalTasks}
-            pendingTasks={stats.pendingTasks}
-            completedTasks={stats.completedTasks}
-            completionRate={stats.completionRate}
-          />
-          <FilterButtons
-            selectedCategory={selectedCategory}
-            onFilterChange={setSelectedCategory}
-          />
-        </Sidebar>
+        {/* 左侧边栏 */}
+        <div className="w-64">
+          <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-6 h-full">
+            <StatsSection
+              totalTasks={stats.totalTasks}
+              pendingTasks={stats.pendingTasks}
+              completedTasks={stats.completedTasks}
+              completionRate={stats.completionRate}
+            />
+            <div className="mt-6">
+              <FilterButtons
+                selectedCategory={selectedCategory}
+                onFilterChange={setSelectedCategory}
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* 主内容区 */}
         <div className="flex-1">
-          <MainContent>
+          <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-6">
             <div className="flex justify-between items-center mb-6">
-              <h1 className="text-2xl font-bold text-gray-900">我的任务</h1>
+              <h2 className="text-xl font-bold text-gray-900">我的任务</h2>
               <TaskForm onSubmit={addTask} />
             </div>
+
             <div className="flex space-x-4 mb-6">
               <input
                 type="text"
@@ -81,7 +87,9 @@ const Home: React.FC = () => {
                 className="w-40"
               />
             </div>
+
             <TaskList tasks={paginatedTasks} onToggleStatus={toggleTaskStatus} onDelete={deleteTask} />
+
             {filteredTasks.length > pageSize && (
               <div className="flex justify-center mt-6">
                 <Pagination
@@ -93,7 +101,7 @@ const Home: React.FC = () => {
                 />
               </div>
             )}
-          </MainContent>
+          </div>
         </div>
       </div>
     </Layout>

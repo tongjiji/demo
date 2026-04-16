@@ -31,7 +31,7 @@ const TaskItem: React.FC<TaskItemProps> = ({ task, onToggleStatus, onDelete }) =
 
   return (
     <div className={`flex items-center justify-between p-4 mb-2 border ${task.status === 'completed' ? 'bg-gray-50 border-gray-300' : 'bg-white border-gray-300'}`}>
-      <div className="flex items-center space-x-4">
+      <div className="flex items-center space-x-3 flex-1">
         <input
           type="checkbox"
           checked={task.status === 'completed'}
@@ -45,27 +45,29 @@ const TaskItem: React.FC<TaskItemProps> = ({ task, onToggleStatus, onDelete }) =
           {task.description && (
             <p className="text-sm text-gray-500 mt-1">{task.description}</p>
           )}
-          <div className="flex space-x-2 mt-2">
+          <div className="flex flex-wrap space-x-2 mt-2">
             <span className={`px-2 py-1 text-xs rounded ${getCategoryColor(task.category)}`}>
               {task.category}
             </span>
             <span className={`px-2 py-1 text-xs rounded ${getPriorityColor(task.priority)}`}>
               {task.priority}
             </span>
+            {task.deadline && (
+              <span className="px-2 py-1 text-xs text-gray-500 border border-gray-300 rounded">
+                {new Date(task.deadline).toLocaleDateString()}
+              </span>
+            )}
           </div>
         </div>
       </div>
-      <div className="flex items-center space-x-4">
-        <div className="text-xs text-gray-500">
-          {new Date(task.createdAt).toLocaleDateString('zh-CN')}
-        </div>
+      <div className="ml-4">
         <Popconfirm
           title="确定要删除这个任务吗？"
           onConfirm={() => onDelete(task.id)}
           okText="确定"
           cancelText="取消"
         >
-          <Button type="text" danger icon={<DeleteOutlined />} size="small" />
+          <Button danger icon={<DeleteOutlined />} size="small" />
         </Popconfirm>
       </div>
     </div>
